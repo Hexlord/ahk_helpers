@@ -95,12 +95,7 @@ OpenVSCodeHere()
     
     IfInString full_path, \
     {
-        commands=
-        (join&
-        cd %full_path%
-        code .
-        exit
-        )
+        commands=cd %full_path% && code . & exit
         runwait, %comspec% /c %commands%
     }
     else
