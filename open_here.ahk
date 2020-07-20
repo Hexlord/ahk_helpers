@@ -99,6 +99,7 @@ OpenVSCodeHere()
         (join&
         cd %full_path%
         code .
+        exit
         )
         runwait, %comspec% /c %commands%
     }
