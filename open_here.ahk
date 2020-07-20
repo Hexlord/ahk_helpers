@@ -95,7 +95,12 @@ OpenVSCodeHere()
     
     IfInString full_path, \
     {
-        Run,  C:\Users\a_knorre\AppData\Local\Programs\Microsoft VS Code\Code.exe, %full_path%
+        commands=
+        (join&
+        cd %full_path%
+        code .
+        )
+        runwait, %comspec% /c %commands%
     }
     else
     {
