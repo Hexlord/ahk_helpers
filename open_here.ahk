@@ -95,8 +95,20 @@ OpenVSCodeHere()
     
     IfInString full_path, \
     {
-        commands=cd %full_path% && code . & exit
-        runwait, %comspec% /c %commands%
+        run, %comspec% /k ,,,pid1
+        ; run, cmd ,,,pid1
+        sleep,1000
+        ClipSaved := ClipboardAll
+        Test := "cd " full_path " & code ." 
+        Clipboard := Test
+        Send, {rshift down}{insert}{rshift up}{enter}
+        sleep,500
+        Clipboard := ClipSaved
+
+        sleep,1000
+        ;-- close DOS window --
+        Process, Close, %pid1%
+        Process, WaitClose, %pid1%
     }
     else
     {
