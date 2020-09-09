@@ -14,7 +14,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #NoTrayIcon
 
-
 SetTitleMatchMode RegEx
 return
 
@@ -22,14 +21,12 @@ return
 ;
 #IfWinActive ahk_class ExploreWClass|CabinetWClass
 
-    ; open Git bash in the current directory
-    ; Use Ctrl + Alt + T for activation; you can redefine it as, e.g. "#t::" to use Win + T
+    ; open Git Bash in the current directory
     ^!t::
         OpenGbHere()
-        Send {AppsKey}
-        Send s
         return
 
+    ; open VS Code in the current directory
     ^!c::
         OpenVSCodeHere()
         return
@@ -93,25 +90,20 @@ OpenVSCodeHere()
 {
     full_path := GatherFullPath()
     
-    IfInString full_path, \
+    IfNotInString full_path, \
     {
-        run, %comspec% /k ,,,pid1
-        ; run, cmd ,,,pid1
-        sleep,1000
-        ClipSaved := ClipboardAll
-        Test := "cd " full_path " & code ." 
-        Clipboard := Test
-        Send, {rshift down}{insert}{rshift up}{enter}
-        sleep,500
-        Clipboard := ClipSaved
-
-        sleep,1000
-        ;-- close DOS window --
-        Process, Close, %pid1%
-        Process, WaitClose, %pid1%
+        full_path := "~"
     }
-    else
-    {
-        Run, C:\Users\a_knorre\AppData\Local\Programs\Microsoft VS Code\Code.exe --cd-to-home
-    }
+    Run, cmd.exe ,, UseErrorLevel, PID
+    sleep,100
+    ClipSaved := ClipboardAll
+    Test := "cd " full_path " && code ." 
+    Clipboard := Test
+    Send, {rshift down}{insert}{rshift up}{enter}
+    sleep,100
+    Clipboard := ClipSaved
+    sleep,100
+    ;-- close DOS window --
+    ;msgbox % PID
+    RunWait, taskkill /f /t /PID %PID%,, Hide UserErrorLevel
 }
