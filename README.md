@@ -7,6 +7,8 @@ Useful ahk scripts like opening github via keyboard.
 
 ## Usage:
 Ctrl+Alt+T while your focus is in some folder, git bash would open there.
+
+
 Ctrl+Alt+C while your focus is in some folder, VS Code would open there.
 
 ## Troubleshooting:
