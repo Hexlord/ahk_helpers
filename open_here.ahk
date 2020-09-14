@@ -102,7 +102,7 @@ OpenVSCodeHere()
     Send, {rshift down}{insert}{rshift up}{enter}
     sleep,100
     Clipboard := ClipSaved
-    sleep,100
+    sleep,1500
     ;-- close DOS window --
     ;msgbox % PID
     RunWait, taskkill /f /t /PID %PID%,, Hide UserErrorLevel
