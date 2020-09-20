@@ -79,7 +79,7 @@ OpenMinGW64Here()
 
     IfInString full_path, /
     {
-        Run, msys2_shell.cmd -mingw64 -where %full_path%
+        Run, msys2_shell.cmd -mingw64 -use-full-path -where %full_path%
     }
     else
     {
