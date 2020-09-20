@@ -98,16 +98,16 @@ OpenVSCodeHere()
     {
         full_path := "."
     }
-    Run, cmd.exe ,, UseErrorLevel, PID
-    sleep,100
+    Run, mingw64 ,, UseErrorLevel, PID
+    sleep,300
     ClipSaved := ClipboardAll
-    Test := "cd " full_path " && code ." 
+    Test := "cd " full_path " && code . && exit" 
     Clipboard := Test
     Send, {rshift down}{insert}{rshift up}{enter}
-    sleep,100
+    sleep,300
     Clipboard := ClipSaved
-    sleep,1500
+    ;sleep,3500
     ;-- close DOS window --
     ;msgbox % PID
-    RunWait, taskkill /f /t /PID %PID%,, Hide UserErrorLevel
+    ;RunWait, taskkill /f /t /PID %PID%,, Hide UserErrorLevel
 }
