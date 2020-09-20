@@ -5,7 +5,7 @@
 ; Author:         Yibo, Hexlord
 ;
 ; Script Function:
-;	Define the shortcut Ctrl + Alt + T for launching Git bash in current folder in Windows Explorer
+;	Define the shortcut Ctrl + Alt + T for launching MinGW64 in current folder in Windows Explorer
 ;
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -21,9 +21,9 @@ return
 ;
 #IfWinActive ahk_class ExploreWClass|CabinetWClass
 
-    ; open Git Bash in the current directory
+    ; open MinGW64 in the current directory
     ^!t::
-        OpenGbHere()
+        OpenMinGW64Here()
         return
 
     ; open VS Code in the current directory
@@ -62,24 +62,28 @@ GatherFullPath()
     ; Just in case - remove all carriage returns (`r)
     StringReplace, full_path, full_path, `r, , all
 
-    return full_path
+    needle := "\\"
+    replacement := "/"
+    result := RegExReplace(full_path, needle, replacement)
+
+    return result
 }
 
 
-; Opens the Git bash shell in the directory browsed in Explorer.
+; Opens the MinGW64 shell in the directory browsed in Explorer.
 ; Note: expecting to be run when the active window is Explorer.
 ;
-OpenGbHere()
+OpenMinGW64Here()
 {
     full_path := GatherFullPath()
-    
-    IfInString full_path, \
+
+    IfInString full_path, /
     {
-        Run,  C:\Program Files\Git\git-bash.exe, %full_path%
+        Run, msys2_shell.cmd -mingw64 -where %full_path%
     }
     else
     {
-        Run, C:\Program Files\Git\git-bash.exe --cd-to-home
+        Run, mingw64
     }
 }
 
