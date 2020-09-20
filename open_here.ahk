@@ -94,9 +94,9 @@ OpenVSCodeHere()
 {
     full_path := GatherFullPath()
     
-    IfNotInString full_path, \
+    IfNotInString full_path, /
     {
-        full_path := "~"
+        full_path := "."
     }
     Run, cmd.exe ,, UseErrorLevel, PID
     sleep,100
